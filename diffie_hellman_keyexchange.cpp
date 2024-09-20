@@ -1,17 +1,27 @@
-#include <bits/stdc++.h>
-#include <NTL/ZZ.h>
-#include <NTL/ZZ_p.h>
+// #include <bits/stdc++.h>
+// #include <NTL/ZZ.h>
+// #include <NTL/ZZ_p.h>
+
+#include <DLP.hpp>
 
 using namespace std;
 using namespace NTL;
-ZZ_p dlp(ZZ_p g, long x)
+
+DLP::DLP(string _p)
+{
+    ZZ p = conv<ZZ>(_p); // all instances of the ZZ_p will have the fixed p value now
+    ZZ_p::init(p);
+    // ZZ_p g = conv<ZZ_p>("2");
+}
+
+ZZ_p DLP ::dlp(ZZ_p g, long x)
 {
     ZZ_p h;
     power(h, g, x);
     return h;
 }
 
-void diffie_hellman(ZZ_p g)
+void DLP::diffie_hellman(ZZ_p g)
 {
     // select a or b randomly
     long p = conv<long>(ZZ_p::modulus());
@@ -34,13 +44,13 @@ void diffie_hellman(ZZ_p g)
         cout << "A_dash == B_dash == " << A_dash << endl;
 }
 
-int main()
-{
-    ZZ p = conv<ZZ>("11"); // all instances of the ZZ_p will have the fixed p value now
-    ZZ_p::init(p);
-    ZZ_p g = conv<ZZ_p>("2");
+// int main()
+// {
+//     ZZ p = conv<ZZ>("11"); // all instances of the ZZ_p will have the fixed p value now
+//     ZZ_p::init(p);
+//     ZZ_p g = conv<ZZ_p>("2");
 
-    diffie_hellman(g);
+//     diffie_hellman(g);
 
-    return 0;
-}
+//     return 0;
+// }
