@@ -7,7 +7,9 @@ using namespace NTL;
 class DLP
 {
 public:
-    DLP(string _p); //pass the prime as a string
+    DLP(); // pass the prime as a string
     ZZ_p dlp(ZZ_p g, long x);
     void diffie_hellman(ZZ_p g);
+    ZZ_p diffie_hellman_encryption(ZZ_p g, long a);
+    ZZ_p diffie_hellman_decryption(ZZ_p A, long b);
 };
