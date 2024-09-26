@@ -12,6 +12,6 @@ public:
     void diffie_hellman(ZZ_p g);
     ZZ_p diffie_hellman_encryption(ZZ_p g, long a);
     ZZ_p diffie_hellman_decryption(ZZ_p A, long b);
-    ZZ_p elGamal_encryption();
-    ZZ_p elGamal_decryption();
+    Vec<ZZ_p> elGamal_encryption(ZZ_p g, long x, long m);//m is message
+    long elGamal_decryption(Vec<ZZ_p>C1_C2 ,long x );//x is the extra info alice knows
 };

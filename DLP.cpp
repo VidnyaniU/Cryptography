@@ -9,3 +9,10 @@ DLP::DLP()
     // ZZ_p::init(p);
     // ZZ_p g = conv<ZZ_p>("2");
 }
+
+ZZ_p DLP ::dlp(ZZ_p g, long x)
+{
+    ZZ_p h;
+    power(h, g, x);
+    return h;
+}

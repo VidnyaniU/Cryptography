@@ -3,12 +3,7 @@
 using namespace std;
 using namespace NTL;
 
-ZZ_p DLP ::dlp(ZZ_p g, long x)
-{
-    ZZ_p h;
-    power(h, g, x);
-    return h;
-}
+
 
 // void DLP::diffie_hellman(ZZ_p g)
 // {
