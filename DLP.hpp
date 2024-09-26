@@ -12,4 +12,6 @@ public:
     void diffie_hellman(ZZ_p g);
     ZZ_p diffie_hellman_encryption(ZZ_p g, long a);
     ZZ_p diffie_hellman_decryption(ZZ_p A, long b);
+    ZZ_p elGamal_encryption();
+    ZZ_p elGamal_decryption();
 };
