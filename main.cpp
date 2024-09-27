@@ -6,9 +6,9 @@ using namespace NTL;
 int main()
 {
     // string _p = "11";
-    ZZ p = conv<ZZ>("17"); // all instances of the ZZ_p will have the fixed p value now
+    ZZ p = conv<ZZ>("467"); // all instances of the ZZ_p will have the fixed p value now
     ZZ_p::init(p);
-    ZZ_p g = conv<ZZ_p>("3");
+    ZZ_p g = conv<ZZ_p>("2");
     DLP obj1;
 
     /*
@@ -27,17 +27,21 @@ int main()
         cout << "Decryption Successful!" << endl;
 
 */
-
     // Alice sends message m to Bob
-    long m = 9;
-    long x = 5;
+    long m = 100;
+    long x = 127;
+    /*
 
-    Vec<ZZ_p> encrypted_message = obj1.elGamal_encryption(g, x, m);
-    cout << "\nC1 :: " << encrypted_message[0] << "\nC2 :: " << encrypted_message[1] << endl;
+        Vec<ZZ_p> encrypted_message = obj1.elGamal_encryption(g, x, m);
+        cout << "\nC1 :: " << encrypted_message[0] << "\nC2 :: " << encrypted_message[1] << endl;
 
-    // Decryption of message at Bob's end
-    long decrypted_message = obj1.elGamal_decryption(encrypted_message, x);
-    cout << "Decrypted message :: " << decrypted_message << endl;
-
+        // Decryption of message at Bob's end
+        ZZ_p decrypted_message = obj1.elGamal_decryption(encrypted_message, x);
+        cout << "Decrypted message :: " << decrypted_message << endl;
+    */
+    Vec<ZZ_p> sign = obj1.elGamal_digital_signature(g, x, m);
+    cout << "gamma :: " << sign[0] << "delta :: " << sign[1] << endl;
+    if (obj1.digital_signal_verification(sign, g, x, m) == 1)
+        cout << "Digital signature verified!!" << endl;
     return 0;
 }

@@ -3,20 +3,43 @@ using namespace std;
 using namespace NTL;
 Vec<ZZ_p> DLP::elGamal_digital_signature(ZZ_p g, long x, long m)
 {
+    ZZ p_minus_1 = ZZ_p::modulus() - 1;
+    // ZZ p = conv<ZZ>("17"); // all instances of the ZZ_p will have the fixed p value now
+    ZZ_p::init(p_minus_1);
 
-    // here we need everything as mod(p-1)
+    Vec<ZZ_p> signature;
 
-    // choose y coprime with (p-1)
+    // Choose y coprime with (p-1)
+    ZZ_p y = random_ZZ_p();
+    while (true)
+    {
+        ZZ yp = conv<ZZ>(y);
+        if (GCD(yp, p_minus_1) == 1)
+            break;
+        y = random_ZZ_p(); // Random y in [0, p-2]
+    }
 
-    // get y inverse
+    // Compute y inverse modulo (p-1)
+    ZZ_p y_inv = inv(y);
 
-    // find gamma = g^y
+    // Compute gamma = g^y mod p-1
+    ZZ_p gamma = dlp(g, conv<long>(y));
 
-    // del = (m - x*gamma)(y inverse)
+    // Compute delta = (m - x*gamma) * y_inv mod (p-1)
+    ZZ_p delta = (m-x*gamma)*y_inv;
+    
 
-    // return gamma , del
+    // ZZ m_zz = conv<ZZ>(m);
+    // ZZ x_zz = conv<ZZ>(x);
+    // ZZ temp = (m_zz - x_zz * gamma) % p_minus_1; // (m - x*gamma) mod (p-1)
+    // ZZ delta = (temp * y_inv) % p_minus_1;
+    // ZZ_p delta = conv<ZZ_p>((m_zz - x_zz * rep(gamma)) * y_inv % p-1);
+
+    signature.append(gamma);
+    signature.append(delta);
+
+    return signature;
 }
-
 bool DLP::digital_signal_verification(Vec<ZZ_p> gamma_del, ZZ_p g, long m, long x)
 {
     ZZ_p rhs = power(g, m);
