@@ -1,4 +1,5 @@
 #include "DLP.hpp"
+#include "EC.hpp"
 
 using namespace std;
 using namespace NTL;
@@ -6,10 +7,10 @@ using namespace NTL;
 int main()
 {
     // string _p = "11";
-    ZZ p = conv<ZZ>("467"); // all instances of the ZZ_p will have the fixed p value now
+    ZZ p = conv<ZZ>("11"); // all instances of the ZZ_p will have the fixed p value now
     ZZ_p::init(p);
-    ZZ_p g = conv<ZZ_p>("2");
-    DLP obj1;
+    // ZZ_p g = conv<ZZ_p>("2");
+    // DLP obj1;
 
     /*
 
@@ -27,10 +28,10 @@ int main()
         cout << "Decryption Successful!" << endl;
 
 */
+    /*
     // Alice sends message m to Bob
     long m = 100;
     long x = 127;
-    /*
 
         Vec<ZZ_p> encrypted_message = obj1.elGamal_encryption(g, x, m);
         cout << "\nC1 :: " << encrypted_message[0] << "\nC2 :: " << encrypted_message[1] << endl;
@@ -38,10 +39,26 @@ int main()
         // Decryption of message at Bob's end
         ZZ_p decrypted_message = obj1.elGamal_decryption(encrypted_message, x);
         cout << "Decrypted message :: " << decrypted_message << endl;
-    */
+
+
     Vec<ZZ_p> sign = obj1.elGamal_digital_signature(g, x, m);
     cout << "gamma :: " << sign[0] << "delta :: " << sign[1] << endl;
     if (obj1.digital_signal_verification(sign, g, x, m) == 1)
         cout << "Digital signature verified!!" << endl;
+    */
+
+    Point P, Q, R;
+    P.x = 2, P.y = 7;
+    // Q.x = 2, Q.y = 4;
+
+    EC ec;
+    // R = ec.point_addition(P, Q);
+
+    // cout << "R = (" << R.x << "," << R.y << ")" << endl;
+    int message = 4;
+    ZZ_p m = conv<ZZ_p>(message);
+    R = ec.scalar_multiplication(m, P);
+    cout << "R = (" << R.x << "," << R.y << ")" << endl;
+
     return 0;
 }
