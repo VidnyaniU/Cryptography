@@ -12,6 +12,6 @@ struct Point
 class EC
 {
 public:
-    Point point_addition(Point P, Point Q);
+    Point point_addition_doubling(Point P, Point Q);
     Point scalar_multiplication(ZZ_p m, Point P);
 };

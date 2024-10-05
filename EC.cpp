@@ -3,7 +3,7 @@
 using namespace std;
 using namespace NTL;
 
-Point EC::point_addition(Point P, Point Q)
+Point EC::point_addition_doubling(Point P, Point Q)
 {
     Point R;
     ZZ_p lambda;
@@ -19,7 +19,9 @@ Point EC::point_addition(Point P, Point Q)
 
     if (lambda == 0)
     {
-        cout << "Lines are parallel!" << endl;
+        R.x = 0, R.y = 1;
+        // cout << "Lines are parallel!" << endl;
+        return R;
     }
     R.x = (lambda * lambda) - P.x - Q.x;
     R.y = lambda * (P.x - R.x) - P.y;
@@ -29,38 +31,26 @@ Point EC::point_addition(Point P, Point Q)
 
 Point EC::scalar_multiplication(ZZ_p m, Point P)
 {
-    Point Q;
-
-    // initialize Q at infinity
-    Q.x = 0, Q.y = 1;
-    Point Pt = P;
+    Point Q = P;
     ZZ temp = conv<ZZ>(m);
-    /*
-    while (temp > 0)
+
+    long num_bits = NumBits(temp); // number of bits
+    // cout << "Q :: (" << Q.x << "," << Q.y << ")" << endl;
+
+    for (long i = num_bits - 2; i >= 0; --i) // from msb to lsb
     {
-        if (temp % 2 == 1)
-        {
-            cout << "For " << temp % 2 << " :: " << endl;
-            Q = point_addition(Pt, Q); // Add
-            cout << "Add :: Q = (" << Q.x << "," << Q.y << ")" << endl;
-        }
-        // double
-        Q = point_addition(Pt, Pt);
-        cout << "Double :: Q = (" << Q.x << "," << Q.y << ")" << endl;
-
-        temp /= 2;
-    }*/
-    long num_bits = NumBits(temp); // Get the number of bits in k
-
-    // Iterate from the most significant bit to the least significant bit
-    for (long i = num_bits - 1; i >= 0; --i)
-    {
-        Q = point_addition(Q, Q); // Always double the Q
-
+        // cout << "bit at " << i << "th position :: " << bit(temp, i) << endl;
+        // Double the  Q
+        Q = point_addition_doubling(Q, Q);
+        // cout << "Q :: (" << Q.x << "," << Q.y << ")" << endl;
+        // Check the ith bit
         if (bit(temp, i) == 1)
-        { // If the ith bit is 1, add the point P
-            Q = point_addition(Q, Pt);
+        {
+            // If the bit is 1, add the point P to Q
+            Q = point_addition_doubling(Q, P);
+            // cout << "Q :: (" << Q.x << "," << Q.y << ")" << endl;
         }
     }
+
     return Q;
 }
