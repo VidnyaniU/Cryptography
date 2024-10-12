@@ -54,3 +54,28 @@ Point EC::scalar_multiplication(ZZ_p m, Point P)
 
     return Q;
 }
+
+// ECDSA
+ZZ_p *EC ::signature_generation(Point P, ZZ q, long x, ZZ m)
+{
+    ZZ_p::init(q); // mod q
+    ZZ_p *signature = new ZZ_p[2];
+    
+    // ZZ_p y = random_ZZ_p();//select random y
+    ZZ_p y = conv<ZZ_p>(3);
+    Point A = scalar_multiplication(y, P); // yP
+    signature[0] = A.x;
+    signature[1] = inv(A.y) * (conv<ZZ_p>(m) + (x * A.x));
+    return signature;
+}
+bool EC::verification(Point P, Point Q, ZZ_p signature[2], ZZ_p m, ZZ q)
+{
+    ZZ_p::init(q); // mod q
+    ZZ_p w = inv(signature[1]);
+    ZZ_p i = w * m;
+    ZZ_p j = w * signature[0];
+    Point A = scalar_multiplication(i, P);
+    Point B = scalar_multiplication(j, Q);
+    Point res = point_addition_doubling(P, Q);
+    return (res.x == signature[0]);
+}
