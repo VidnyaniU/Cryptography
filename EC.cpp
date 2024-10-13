@@ -54,6 +54,7 @@ Point EC::scalar_multiplication(ZZ_p m, Point P)
 
     return Q;
 }
+//encryption-decryption
 
 // ECDSA
 ZZ_p *EC ::signature_generation(Point P, ZZ q, long x, ZZ m)
