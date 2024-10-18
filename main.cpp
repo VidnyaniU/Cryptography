@@ -55,10 +55,23 @@ int main()
     // R = ec.point_addition(P, Q);
 
     // cout << "R = (" << R.x << "," << R.y << ")" << endl;
-    int message = 4;
-    ZZ_p m = conv<ZZ_p>(message);
-    R = ec.scalar_multiplication(m, P);
-    cout << "R = (" << R.x << "," << R.y << ")" << endl;
+
+    // ZZ_p m = conv<ZZ_p>(message);
+    // R = ec.scalar_multiplication(m, P);
+    // cout << "R = (" << R.x << "," << R.y << ")" << endl;
+
+    Point message;
+    message.x = 3;
+    message.y = 6;
+    long x = 4;
+
+    Point *encrypted_text = new Point[2];
+    encrypted_text = ec.elGamal_encryption_over_EC(P, x, message);
+    cout << "C1 :: x = " <<encrypted_text[0].x<<" y =  "<<encrypted_text[0].y<< endl;
+    cout << "C2 :: x = " <<encrypted_text[1].x<<" y =  "<<encrypted_text[1].y<< endl;
+
+    
+
 
     return 0;
 }
