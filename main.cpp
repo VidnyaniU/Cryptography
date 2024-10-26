@@ -1,5 +1,6 @@
 #include "DLP.hpp"
 #include "EC.hpp"
+#include "RSA.hpp"
 
 using namespace std;
 using namespace NTL;
@@ -47,11 +48,11 @@ int main()
         cout << "Digital signature verified!!" << endl;
     */
 
-    Point P, Q, R;
-    P.x = 2, P.y = 7;
+    // Point P, Q, R;
+    // P.x = 2, P.y = 7;
     // Q.x = 2, Q.y = 4;
 
-    EC ec;
+    // EC ec;
     // R = ec.point_addition(P, Q);
 
     // cout << "R = (" << R.x << "," << R.y << ")" << endl;
@@ -60,18 +61,23 @@ int main()
     // R = ec.scalar_multiplication(m, P);
     // cout << "R = (" << R.x << "," << R.y << ")" << endl;
 
-    Point message;
-    message.x = 3;
-    message.y = 6;
-    long x = 4;
+    // Point message;
+    // message.x = 3;
+    // message.y = 6;
+    // long x = 4;
 
-    Point *encrypted_text = new Point[2];
-    encrypted_text = ec.elGamal_encryption_over_EC(P, x, message);
-    cout << "C1 :: x = " <<encrypted_text[0].x<<" y =  "<<encrypted_text[0].y<< endl;
-    cout << "C2 :: x = " <<encrypted_text[1].x<<" y =  "<<encrypted_text[1].y<< endl;
+    // Point *encrypted_text = new Point[2];
+    // encrypted_text = ec.elGamal_encryption_over_EC(P, x, message);
+    // cout << "C1 :: x = " <<encrypted_text[0].x<<" y =  "<<encrypted_text[0].y<< endl;
+    // cout << "C2 :: x = " <<encrypted_text[1].x<<" y =  "<<encrypted_text[1].y<< endl;
 
-    
-
+    RSA rsa(1);
+    ZZ x = conv<ZZ>(3);
+    ZZ a = rsa.a;
+    ZZ b = rsa.b;
+    ZZ n = rsa.n;
+    ZZ y = rsa.RSA_Encrypt(x);
+    cout << "Encrypted message :: " << y << endl;
 
     return 0;
 }
