@@ -61,10 +61,10 @@ int main()
     // R = ec.scalar_multiplication(m, P);
     // cout << "R = (" << R.x << "," << R.y << ")" << endl;
 
-    // Point message;
-    // message.x = 3;
-    // message.y = 6;
-    // long x = 4;
+    Point message;
+    message.x = 3;
+    message.y = 6;
+    long x = 4;
 
     // Point *encrypted_text = new Point[2];
     // encrypted_text = ec.elGamal_encryption_over_EC(P, x, message);
