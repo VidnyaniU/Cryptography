@@ -61,10 +61,10 @@ int main()
     // R = ec.scalar_multiplication(m, P);
     // cout << "R = (" << R.x << "," << R.y << ")" << endl;
 
-    Point message;
-    message.x = 3;
-    message.y = 6;
-    long x = 4;
+    // Point message;
+    // message.x = 3;
+    // message.y = 6;
+    // long x = 4;
 
     // Point *encrypted_text = new Point[2];
     // encrypted_text = ec.elGamal_encryption_over_EC(P, x, message);
@@ -72,11 +72,11 @@ int main()
     // cout << "C2 :: x = " <<encrypted_text[1].x<<" y =  "<<encrypted_text[1].y<< endl;
 
     RSA rsa(1);
-    ZZ x = conv<ZZ>(3);
+    ZZ msg = conv<ZZ>(3);
     ZZ a = rsa.a;
     ZZ b = rsa.b;
     ZZ n = rsa.n;
-    ZZ y = rsa.RSA_Encrypt(x);
+    ZZ y = rsa.RSA_Encrypt(msg);
     cout << "Encrypted message :: " << y << endl;
 
     return 0;
