@@ -17,4 +17,5 @@ public:
     ZZ RSA_Encrypt(ZZ message);
 
     ZZ RSA_Decrypt(ZZ ciphertext);
+    // digital signature
 };
