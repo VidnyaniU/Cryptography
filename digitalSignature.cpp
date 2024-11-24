@@ -26,8 +26,7 @@ Vec<ZZ_p> DLP::elGamal_digital_signature(ZZ_p g, long x, long m)
     ZZ_p gamma = dlp(g, conv<long>(y));
 
     // Compute delta = (m - x*gamma) * y_inv mod (p-1)
-    ZZ_p delta = (m-x*gamma)*y_inv;
-    
+    ZZ_p delta = (m - x * gamma) * y_inv;
 
     // ZZ m_zz = conv<ZZ>(m);
     // ZZ x_zz = conv<ZZ>(x);

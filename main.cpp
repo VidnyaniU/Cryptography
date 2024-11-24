@@ -1,7 +1,8 @@
-#include "DLP.hpp"
-#include "EC.hpp"
-#include "RSA.hpp"
+// #include "DLP.hpp"
+// #include "EC.hpp"
+// #include "RSA.hpp"
 
+#include "cryptography.hpp"
 using namespace std;
 using namespace NTL;
 
