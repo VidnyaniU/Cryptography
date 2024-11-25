@@ -39,3 +39,11 @@ ZZ RSA::RSA_Decrypt(ZZ ciphertext)
 {
     return PowerMod(ciphertext, a, n);
 }
+ZZ RSA::RSA_Sign(ZZ message)
+{
+    return PowerMod(message, a, n);
+}
+bool RSA::RSA_Verify(ZZ message, ZZ signature)
+{
+    return PowerMod(message, b, n) == signature;
+}

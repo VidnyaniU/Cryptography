@@ -14,8 +14,12 @@ public:
 
     void GenerateKeys(long keySize);
 
+    // encryption and decryption
     ZZ RSA_Encrypt(ZZ message);
 
     ZZ RSA_Decrypt(ZZ ciphertext);
-    // digital signature
+
+    // digital signature and verification
+    ZZ RSA_Sign(ZZ message);
+    bool RSA_Verify(ZZ message, ZZ signature);
 };
