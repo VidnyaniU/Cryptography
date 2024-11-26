@@ -3,13 +3,14 @@
 // #include "RSA.hpp"
 
 #include "cryptography.hpp"
+
 using namespace std;
 using namespace NTL;
 
 int main()
 {
     // string _p = "11";
-    ZZ p = conv<ZZ>("11"); // all instances of the ZZ_p will have the fixed p value now
+    ZZ p = conv<ZZ>("29"); // all instances of the ZZ_p will have the fixed p value now
     ZZ_p::init(p);
     // ZZ_p g = conv<ZZ_p>("2");
     // DLP obj1;
@@ -49,18 +50,18 @@ int main()
         cout << "Digital signature verified!!" << endl;
     */
 
-    // Point P, Q, R;
+    Point P, Q, R;
     // P.x = 2, P.y = 7;
     // Q.x = 2, Q.y = 4;
 
-    // EC ec;
+    EC ec;
     // R = ec.point_addition(P, Q);
 
     // cout << "R = (" << R.x << "," << R.y << ")" << endl;
 
-    // ZZ_p m = conv<ZZ_p>(message);
-    // R = ec.scalar_multiplication(m, P);
-    // cout << "R = (" << R.x << "," << R.y << ")" << endl;
+    ZZ_p m = conv<ZZ_p>("11");
+    R = ec.scalar_multiplication(m, P);
+    cout << "R = (" << R.x << "," << R.y << ")" << endl;
 
     // Point message;
     // message.x = 3;
@@ -72,13 +73,13 @@ int main()
     // cout << "C1 :: x = " <<encrypted_text[0].x<<" y =  "<<encrypted_text[0].y<< endl;
     // cout << "C2 :: x = " <<encrypted_text[1].x<<" y =  "<<encrypted_text[1].y<< endl;
 
-    RSA rsa(1);
-    ZZ msg = conv<ZZ>(3);
-    ZZ a = rsa.a;
-    ZZ b = rsa.b;
-    ZZ n = rsa.n;
-    ZZ y = rsa.RSA_Encrypt(msg);
-    cout << "Encrypted message :: " << y << endl;
+    // RSA rsa(1);
+    // ZZ msg = conv<ZZ>(3);
+    // ZZ a = rsa.a;
+    // ZZ b = rsa.b;
+    // ZZ n = rsa.n;
+    // ZZ y = rsa.RSA_Encrypt(msg);
+    // cout << "Encrypted message :: " << y << endl;
 
     return 0;
 }
