@@ -13,7 +13,7 @@ Point EC::point_addition_doubling(Point P, Point Q)
     // P=Q
     else if (P.x == Q.x && P.y == Q.y)
     {
-        int a = 1;
+        int a = 5;
         lambda = (3 * P.x * P.x + a) * inv(2 * P.y);
     }
 
