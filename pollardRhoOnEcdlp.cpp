@@ -20,3 +20,7 @@ struct ECPoint {
     ZZ a, b; // Coefficients of the linear combination Q = aP + bG
 };
 
+// pseudo-random partitioning function
+int partition(const ZZ& x, int numPartitions) {
+    return to_long(x % numPartitions);
+}
