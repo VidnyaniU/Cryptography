@@ -141,7 +141,23 @@ int main()
     ZZ p = conv<ZZ>("97"); // Prime field
     EllipticCurve E(a, b, p);
 
-   
+    // Generator point G
+    ECPoint G{conv<ZZ>("3"), conv<ZZ>("6"), ZZ(0), ZZ(0)};
+
+    // Target point Q
+    ECPoint Q{conv<ZZ>("80"), conv<ZZ>("10"), ZZ(0), ZZ(0)};
+
+    ZZ n = conv<ZZ>("19"); // Order of the subgroup
+
+    try
+    {
+        ZZ result = pollardsRhoECDLP(E, G, Q, n);
+        cout << "Discrete log: " << result << endl;
+    }
+    catch (const exception &e)
+    {
+        cerr << "Error: " << e.what() << endl;
+    }
 
     return 0;
 }
