@@ -1,6 +1,6 @@
 #include <NTL/ZZ.h>
-#include <NTL/EllipticCurve.h>
 #include <iostream>
+#include <stdexcept>
 #include <random>
 
 using namespace NTL;
@@ -20,9 +20,50 @@ struct ECPoint
 {
     ZZ x, y;
     ZZ a, b; // Coefficients of the linear combination Q = aP + bG
+
+    ECPoint() : x(ZZ(0)), y(ZZ(0)), a(ZZ(0)), b(ZZ(0)) {}
 };
 
-// pseudo-random partitioning function
+// Class for an elliptic curve over a prime field
+class EllipticCurve
+{
+public:
+    ZZ a, b, p; // Curve parameters: y^2 = x^3 + ax + b (mod p)
+
+    EllipticCurve(const ZZ &a, const ZZ &b, const ZZ &p) : a(a), b(b), p(p) {}
+
+    // Add two points on the curve
+    ECPoint add(const ECPoint &P, const ECPoint &Q) const
+    {
+        if (P.x == Q.x && P.y == Q.y)
+        {
+            return dbl(P);
+        }
+
+        ZZ lambda = (Q.y - P.y) * InvMod(Q.x - P.x, p) % p;
+        ZZ xR = (lambda * lambda - P.x - Q.x) % p;
+        ZZ yR = (lambda * (P.x - xR) - P.y) % p;
+
+        return {xR < 0 ? xR + p : xR, yR < 0 ? yR + p : yR, ZZ(0), ZZ(0)};
+    }
+
+    // Double a point on the curve
+    ECPoint dbl(const ECPoint &P) const
+    {
+        if (P.y == 0)
+        {
+            return {ZZ(0), ZZ(0), ZZ(0), ZZ(0)}; // Point at infinity
+        }
+
+        ZZ lambda = (3 * P.x * P.x + a) * InvMod(2 * P.y, p) % p;
+        ZZ xR = (lambda * lambda - 2 * P.x) % p;
+        ZZ yR = (lambda * (P.x - xR) - P.y) % p;
+
+        return {xR < 0 ? xR + p : xR, yR < 0 ? yR + p : yR, ZZ(0), ZZ(0)};
+    }
+};
+
+// Pseudo-random partitioning function
 int partition(const ZZ &x, int numPartitions)
 {
     return to_long(x % numPartitions);
@@ -95,6 +136,12 @@ ZZ pollardsRhoECDLP(const EllipticCurve &E, const ECPoint &G, const ECPoint &Q, 
 
 int main()
 {
+    ZZ a = conv<ZZ>("2");
+    ZZ b = conv<ZZ>("3");
+    ZZ p = conv<ZZ>("97"); // Prime field
+    EllipticCurve E(a, b, p);
+
+   
 
     return 0;
 }
