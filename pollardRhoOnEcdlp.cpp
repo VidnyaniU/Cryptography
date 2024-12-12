@@ -17,12 +17,12 @@ ZZ randomZZ(const ZZ &limit)
 }
 
 // // Struct for an elliptic curve point with coefficients
-// struct ECPoint
+// struct Point
 // {
 //     ZZ x, y;
 //     ZZ a, b; // Coefficients of the linear combination Q = aP + bG
 
-//     ECPoint() : x(ZZ(0)), y(ZZ(0)), a(ZZ(0)), b(ZZ(0)) {}
+//     Point() : x(ZZ(0)), y(ZZ(0)), a(ZZ(0)), b(ZZ(0)) {}
 // };
 
 // Class for an elliptic curve over a prime field
@@ -34,7 +34,7 @@ public:
     EllipticCurve(const ZZ &a, const ZZ &b, const ZZ &p) : a(a), b(b), p(p) {}
 
     // Add two points on the curve
-    ECPoint add(const ECPoint &P, const ECPoint &Q) const
+    Point add(const Point &P, const Point &Q) const
     {
         if (P.x == Q.x && P.y == Q.y)
         {
@@ -49,7 +49,7 @@ public:
     }
 
     // Double a point on the curve
-    ECPoint dbl(const ECPoint &P) const
+    Point dbl(const Point &P) const
     {
         if (P.y == 0)
         {
@@ -71,10 +71,10 @@ int partition(const ZZ &x, int numPartitions)
 }
 
 // Pollard Rho Algorithm for ECDLP
-ZZ pollardsRhoECDLP(const EllipticCurve &E, const ECPoint &G, const ECPoint &Q, const ZZ &n)
+ZZ pollardsRhoECDLP(const EllipticCurve &E, const Point &G, const Point &Q, const ZZ &n)
 {
     int numPartitions = 3; // Number of partitions
-    ECPoint Tortoise = G, Hare = G;
+    Point Tortoise = G, Hare = G;
 
     // Initialize random coefficients a, b for Tortoise and Hare
     Tortoise.a = randomZZ(n);
@@ -83,7 +83,7 @@ ZZ pollardsRhoECDLP(const EllipticCurve &E, const ECPoint &G, const ECPoint &Q, 
     Hare.b = randomZZ(n);
 
     // Random walks using the partition function
-    auto step = [&](ECPoint &P)
+    auto step = [&](Point &P)
     {
         int region = partition(P.x, numPartitions);
         if (region == 0)
@@ -143,10 +143,10 @@ int main()
     EllipticCurve E(a, b, p);
 
     // Generator point G
-    ECPoint G{conv<ZZ>("3"), conv<ZZ>("6"), ZZ(0), ZZ(0)};
+    Point G{conv<ZZ>("3"), conv<ZZ>("6"), ZZ(0), ZZ(0)};
 
     // Target point Q
-    ECPoint Q{conv<ZZ>("80"), conv<ZZ>("10"), ZZ(0), ZZ(0)};
+    Point Q{conv<ZZ>("80"), conv<ZZ>("10"), ZZ(0), ZZ(0)};
 
     ZZ n = conv<ZZ>("19"); // Order of the subgroup
 
