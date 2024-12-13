@@ -16,15 +16,6 @@ ZZ randomZZ(const ZZ &limit)
     return ZZ(dis(gen));
 }
 
-// // Struct for an elliptic curve point with coefficients
-// struct Point
-// {
-//     ZZ x, y;
-//     ZZ a, b; // Coefficients of the linear combination Q = aP + bG
-
-//     Point() : x(ZZ(0)), y(ZZ(0)), a(ZZ(0)), b(ZZ(0)) {}
-// };
-
 // Class for an elliptic curve over a prime field
 class EllipticCurve
 {
