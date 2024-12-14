@@ -25,34 +25,10 @@ public:
     EllipticCurve(const ZZ &a, const ZZ &b, const ZZ &p) : a(a), b(b), p(p) {}
 
     // Add two points on the curve
-    Point add(const Point &P, const Point &Q) const
-    {
-        if (P.x == Q.x && P.y == Q.y)
-        {
-            return dbl(P);
-        }
-
-        ZZ lambda = (Q.y - P.y) * InvMod(Q.x - P.x, p) % p;
-        ZZ xR = (lambda * lambda - P.x - Q.x) % p;
-        ZZ yR = (lambda * (P.x - xR) - P.y) % p;
-
-        return {xR < 0 ? xR + p : xR, yR < 0 ? yR + p : yR, ZZ(0), ZZ(0)};
-    }
+   
 
     // Double a point on the curve
-    Point dbl(const Point &P) const
-    {
-        if (P.y == 0)
-        {
-            return {ZZ(0), ZZ(0), ZZ(0), ZZ(0)}; // Point at infinity
-        }
-
-        ZZ lambda = (3 * P.x * P.x + a) * InvMod(2 * P.y, p) % p;
-        ZZ xR = (lambda * lambda - 2 * P.x) % p;
-        ZZ yR = (lambda * (P.x - xR) - P.y) % p;
-
-        return {xR < 0 ? xR + p : xR, yR < 0 ? yR + p : yR, ZZ(0), ZZ(0)};
-    }
+  
 };
 
 // Pseudo-random partitioning function
