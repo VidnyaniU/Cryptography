@@ -49,30 +49,7 @@ ZZ pollardsRhoECDLP(const EllipticCurve &E, const Point &G, const Point &Q, cons
     Hare.a = randomZZ(n);
     Hare.b = randomZZ(n);
 
-    // Random walks using the partition function
-    auto step = [&](Point &P)
-    {
-        int region = partition(P.x, numPartitions);
-        if (region == 0)
-        {
-            // Update as P + G
-            P = E.add(P, G);
-            P.a = (P.a + 1) % n;
-        }
-        else if (region == 1)
-        {
-            // Double the point
-            P = E.dbl(P);
-            P.a = (2 * P.a) % n;
-            P.b = (2 * P.b) % n;
-        }
-        else
-        {
-            // Update as P + Q
-            P = E.add(P, Q);
-            P.b = (P.b + 1) % n;
-        }
-    };
+  //randon walk generation
 
     while (true)
     {
